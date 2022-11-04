@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -57,7 +58,7 @@ export class MascotaController {
   ): Promise<Count> {
     return this.mascotaRepository.count(where);
   }
-
+ @authenticate("Asesor")
   @get('/mascotas')
   @response(200, {
     description: 'Array of Mascota model instances',

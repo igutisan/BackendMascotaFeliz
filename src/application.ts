@@ -11,6 +11,8 @@ import path from 'path';
 import {MySequence} from './sequence';
 import {estrategiaAdministrador} from './strategies/admin.strategy';
 import {AuthenticationComponent, registerAuthenticationStrategy} from '@loopback/authentication';
+import {estrategiaAsesor} from './strategies/Asesor.startegy';
+import {estrategiaCliente} from './strategies/Cliente.strategy';
 
 export {ApplicationConfig};
 
@@ -44,6 +46,10 @@ export class MascotasApplication extends BootMixin(
     };
 
     registerAuthenticationStrategy(this, estrategiaAdministrador);
+    this.component(AuthenticationComponent);
+    registerAuthenticationStrategy(this, estrategiaAsesor);
+    this.component(AuthenticationComponent);
+    registerAuthenticationStrategy(this, estrategiaCliente);
     this.component(AuthenticationComponent);
   }
 }

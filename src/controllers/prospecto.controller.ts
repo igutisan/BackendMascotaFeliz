@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -25,7 +26,7 @@ export class ProspectoController {
     @repository(ProspectoRepository)
     public prospectoRepository : ProspectoRepository,
   ) {}
-
+  @authenticate("Cliente")
   @post('/prospectos')
   @response(200, {
     description: 'Prospecto model instance',

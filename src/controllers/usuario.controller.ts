@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {service} from '@loopback/core';
 import {
   Count,
@@ -24,7 +25,7 @@ import {Credenciales, Usuario} from '../models';
 import {UsuarioRepository} from '../repositories';
 import {AutenticacionService} from '../services';
 const fetch= require('node-fetch');
-
+@authenticate("Admin")
 export class UsuarioController {
   constructor(
     @repository(UsuarioRepository)
@@ -34,7 +35,7 @@ export class UsuarioController {
 
 
   ) {}
-
+@authenticate.skip()
 @post("/identificarPersona",{
   responses:{
     '200':{
@@ -87,15 +88,16 @@ async identificarPersona(
     })
     usuario: Omit<Usuario, 'id'>,
   ): Promise<Usuario> {
+    //Generacion de clave y cifrado
     let clave = this.servicioAutenticacion.GenerarClave();
     let claveCifrada = this.servicioAutenticacion.cifrarClave(clave);
     usuario.Contrasena  = claveCifrada;
     let u = await this.usuarioRepository.create(usuario);
-
+    //Generacion de variables para el correo
     let destino = usuario.Correo;
     let asunto = 'Ensayo de registro';
     let contenido = `Hola ${usuario.Nombre} bienvenido, su usuario es ${usuario.Correo} y su contrasena es ${clave}`
-
+    //Formato para realizar correo
     fetch(`${Llaves.urlServicioNotificaciones}/email?correo_destino=${destino}&asunto=${asunto}&contenido=${contenido}`)
     .then((data:any)=>{
       console.log(data);

@@ -19,14 +19,17 @@ export class AutenticacionService {
   /*
    * Add service methods here
    */
+  // Metodo para generar clave
   GenerarClave(){
     let clave = generador(8,false);
     return clave;
   }
+  //Metodo para cifrar la clave creada previamente
     cifrarClave(clave:string){
       let claveCifrada = cryptoJS.MD5(clave).toString();
       return claveCifrada;
     }
+    // Para encontrar a una persona
     IdentificarPersona(usuario:string, contrasena: string) {
 
       try{

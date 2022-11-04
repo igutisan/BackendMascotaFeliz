@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -19,7 +20,7 @@ import {
 } from '@loopback/rest';
 import {Plan} from '../models';
 import {PlanRepository} from '../repositories';
-
+@authenticate("Admin")
 export class PlanController {
   constructor(
     @repository(PlanRepository)
@@ -46,7 +47,7 @@ export class PlanController {
   ): Promise<Plan> {
     return this.planRepository.create(plan);
   }
-
+  @authenticate("Cliente")
   @get('/plans/count')
   @response(200, {
     description: 'Plan model count',
