@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -17,14 +18,16 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
+
 import {ProductoServicio} from '../models';
 import {ProductoServicioRepository} from '../repositories';
-
+@authenticate("admin")
 export class ProductoController {
   constructor(
     @repository(ProductoServicioRepository)
     public productoServicioRepository : ProductoServicioRepository,
   ) {}
+
 
   @post('/producto-servicios')
   @response(200, {
@@ -57,7 +60,7 @@ export class ProductoController {
   ): Promise<Count> {
     return this.productoServicioRepository.count(where);
   }
-
+  @authenticate.skip()
   @get('/producto-servicios')
   @response(200, {
     description: 'Array of ProductoServicio model instances',
