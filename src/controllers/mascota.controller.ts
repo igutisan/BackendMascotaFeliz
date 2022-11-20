@@ -21,6 +21,7 @@ import {
 import {Mascota} from '../models';
 import {MascotaRepository} from '../repositories';
 
+@authenticate("Cliente")
 export class MascotaController {
   constructor(
     @repository(MascotaRepository)
@@ -58,7 +59,7 @@ export class MascotaController {
   ): Promise<Count> {
     return this.mascotaRepository.count(where);
   }
- @authenticate("Asesor")
+ @authenticate.skip()
   @get('/mascotas')
   @response(200, {
     description: 'Array of Mascota model instances',
@@ -95,7 +96,7 @@ export class MascotaController {
   ): Promise<Count> {
     return this.mascotaRepository.updateAll(mascota, where);
   }
-
+  @authenticate.skip()
   @get('/mascotas/{id}')
   @response(200, {
     description: 'Mascota model instance',
@@ -129,7 +130,7 @@ export class MascotaController {
   ): Promise<void> {
     await this.mascotaRepository.updateById(id, mascota);
   }
-
+  @authenticate.skip()
   @put('/mascotas/{id}')
   @response(204, {
     description: 'Mascota PUT success',

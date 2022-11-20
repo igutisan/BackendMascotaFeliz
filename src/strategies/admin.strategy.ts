@@ -22,7 +22,7 @@ export class estrategiaAdministrador implements AuthenticationStrategy{
   if (token) {
     let datos = this.servicioAutenticacion.validarTokenJWT(token);
     if (datos) {
-      if (datos.Data.rol === "Admin") {
+      if (datos.Data.rol === "Administrador") {
         const perfil: UserProfile = Object.assign({
           nombre: datos.Data.nombre
           });

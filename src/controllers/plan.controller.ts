@@ -20,7 +20,7 @@ import {
 } from '@loopback/rest';
 import {Plan} from '../models';
 import {PlanRepository} from '../repositories';
-@authenticate("Admin")
+//@authenticate("Admin")
 export class PlanController {
   constructor(
     @repository(PlanRepository)

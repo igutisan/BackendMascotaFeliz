@@ -18,6 +18,8 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
+import fetch from 'node-fetch';
+import {Llaves} from '../config/llaves';
 import {Prospecto} from '../models';
 import {ProspectoRepository} from '../repositories';
 
@@ -26,7 +28,7 @@ export class ProspectoController {
     @repository(ProspectoRepository)
     public prospectoRepository : ProspectoRepository,
   ) {}
-  @authenticate("Cliente")
+  //@authenticate("Cliente")
   @post('/prospectos')
   @response(200, {
     description: 'Prospecto model instance',
@@ -45,8 +47,23 @@ export class ProspectoController {
     })
     prospecto: Omit<Prospecto, 'id'>,
   ): Promise<Prospecto> {
-    return this.prospectoRepository.create(prospecto);
+    //Generacion de variables para el correo
+    let p = await this.prospectoRepository.create(prospecto);
+    let destino = prospecto.Correo;
+    let nombre = prospecto.Nombre;
+    let asunto = 'Contacto Mascota Feliz';
+    let contenido =`Hola ${prospecto.Nombre}, bienvenid@ a Mascota feliz sus credenciales son Usuario: ${prospecto.Correo} y su contrasena es`
+
+    //Formato para realizar correo
+    fetch(`${Llaves.urlServicioNotificaciones}/emailContacto?correo_destino=${destino}&asunto=${asunto}&contenido=${contenido}&nombre=${nombre}`)
+    .then((data:any) =>{
+      console.log(data);
+    })
+    return p;
   }
+
+
+
 
   @get('/prospectos/count')
   @response(200, {

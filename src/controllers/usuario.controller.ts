@@ -95,10 +95,11 @@ async identificarPersona(
     let u = await this.usuarioRepository.create(usuario);
     //Generacion de variables para el correo
     let destino = usuario.Correo;
-    let asunto = 'Ensayo de registro';
-    let contenido = `Hola ${usuario.Nombre} bienvenido, su usuario es ${usuario.Correo} y su contrasena es ${clave}`
+    let nombre = usuario.Nombre;
+    let asunto = 'Acceso a mascota feliz';
+    let contenido =`Hola ${usuario.Nombre}, bienvenid@ a Mascota feliz sus credenciales son Usuario: ${usuario.Correo} y su contrasena es ${clave} `
     //Formato para realizar correo
-    fetch(`${Llaves.urlServicioNotificaciones}/email?correo_destino=${destino}&asunto=${asunto}&contenido=${contenido}`)
+    fetch(`${Llaves.urlServicioNotificaciones}/email?correo_destino=${destino}&asunto=${asunto}&contenido=${contenido}&nombre=${nombre}&clave=${clave}`)
     .then((data:any)=>{
       console.log(data);
     })

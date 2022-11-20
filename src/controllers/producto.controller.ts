@@ -31,6 +31,7 @@ export class ProductoController {
   ) {}
 
 // authenticate.skip() --> para que el rol no pueda realizar cierta funcion
+@authenticate.skip()
   @post('/producto-servicios')
   @response(200, {
     description: 'ProductoServicio model instance',
@@ -52,7 +53,7 @@ export class ProductoController {
     return this.productoServicioRepository.create(productoServicio);
   }
 
-  //authenticate('Rol') --> para que el rol tenga una funcion especifica
+  @authenticate()
   @get('/producto-servicios/count')
   @response(200, {
     description: 'ProductoServicio model count',
@@ -63,7 +64,7 @@ export class ProductoController {
   ): Promise<Count> {
     return this.productoServicioRepository.count(where);
   }
-  @authenticate.skip()
+  @authenticate()
   @get('/producto-servicios')
   @response(200, {
     description: 'Array of ProductoServicio model instances',
@@ -100,7 +101,7 @@ export class ProductoController {
   ): Promise<Count> {
     return this.productoServicioRepository.updateAll(productoServicio, where);
   }
-
+  @authenticate.skip()
   @get('/producto-servicios/{id}')
   @response(200, {
     description: 'ProductoServicio model instance',

@@ -65,6 +65,17 @@ export class Mascota extends Entity {
   })
   Foto: string;
 
+  @property({
+    type: 'string',
+    required: false,
+  })
+  Detalle: string;
+  @property({
+    type: 'string',
+    required: false,
+  })
+  Estado: string;
+
   @belongsTo(() => Plan)
   planId: string;
 
