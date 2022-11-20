@@ -27,6 +27,11 @@ export class Plan extends Entity {
     required: true,
   })
   NombrePlan: string;
+  @property({
+    type: 'string',
+    required: true,
+  })
+  Foto: string;
 
   @hasMany(() => Mascota)
   mascotas: Mascota[];

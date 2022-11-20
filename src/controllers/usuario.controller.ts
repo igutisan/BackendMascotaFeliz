@@ -116,7 +116,7 @@ async identificarPersona(
   ): Promise<Count> {
     return this.usuarioRepository.count(where);
   }
-
+  @authenticate.skip()
   @get('/usuarios')
   @response(200, {
     description: 'Array of Usuario model instances',
@@ -153,7 +153,7 @@ async identificarPersona(
   ): Promise<Count> {
     return this.usuarioRepository.updateAll(usuario, where);
   }
-
+  @authenticate.skip()
   @get('/usuarios/{id}')
   @response(200, {
     description: 'Usuario model instance',
@@ -187,7 +187,7 @@ async identificarPersona(
   ): Promise<void> {
     await this.usuarioRepository.updateById(id, usuario);
   }
-
+  @authenticate.skip()
   @put('/usuarios/{id}')
   @response(204, {
     description: 'Usuario PUT success',
